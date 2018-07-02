@@ -1,0 +1,9 @@
+{"root":{"title":"title dayo","geometry":"400x300+100+10"},
+"main_frame":[
+{"Type":"Label","name":"lbl1","option":"width=20, text='ttt1'"},
+{"Type":"Label","name":"lbl2","option":"width=20, text='ttt2'"}
+]
+
+
+
+}

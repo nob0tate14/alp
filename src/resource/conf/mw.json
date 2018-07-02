@@ -1,0 +1,24 @@
+{"title":"title dayo","geometry":"500x300+100+10",
+"Widgets":[
+{"Type":"ttk.Frame","Name":"frm1","Option":{"relief":"'groove'", "borderwidth":1},
+"Widgets":[
+{"Type":"ttk.Label","Name":"lbl1","Option":{"width":15, "text":"'コマンド１ ls'","relief":"'ridge'", "borderwidth":1}},
+{"Type":"ttk.Label","Name":"lbl2","Option":{"width":5, "text":"'引数'"}},
+{"Type":"ttk.Entry","Name":"etr1","Option":{"width":20}},
+{"Type":"ttk.Button","Name":"btn1","Option":{"width":10, "text":"'実行'","command":"lambda:exec_bat('bat1.sh','etr1')"}},
+{"Type":"ttk.Label","Name":"lbl3","Option":{"width":20, "text":"'label dayo'"}}
+]
+},
+{"Type":"ttk.Frame","Name":"frm2","Option":{"relief":"'groove'", "borderwidth":1},
+"Widgets":[
+{"Type":"ttk.Label","Name":"lbl11","Option":{"width":20, "text":"'コマンド２ echo'","relief":"'ridge'", "borderwidth":1}},
+{"Type":"ttk.Label","Name":"lbl12","Option":{"width":5, "text":"'引数'"}},
+{"Type":"ttk.Entry","Name":"etr11","Option":{"width":20}},
+{"Type":"ttk.Button","Name":"btn11","Option":{"width":10, "text":"'実行'","command":"lambda:exec_bat('bat2.sh','etr11')"}},
+{"Type":"ttk.Label","Name":"lbl13","Option":{"width":20, "text":"'label dagaya'"}}
+]
+}
+]
+
+
+}
