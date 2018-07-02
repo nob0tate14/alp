@@ -12,10 +12,10 @@ execute shellscript or any programs by GUI
 **alp.main.py**  
 main program
 
-**alp/resource/bat/**
-シェルスクリプトなんかを置く場所
-**alp/resource/conf/**
-画面定義用のjson等を置く場所
+**alp/resource/bat/**  
+シェルスクリプトなんかを置く場所  
+**alp/resource/conf/**  
+画面定義用のjson等を置く場所  
 
 ## Requirement
 
