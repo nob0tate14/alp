@@ -24,6 +24,6 @@ class MainWindow(tkinter.Tk, WindowCoreJ):
         mf = tkinter.Frame(master=self)
         mf.pack()
 
-        mf.quit = tkinter.Button(mf, text="QUIT", fg="orange",
+        mf.exit = tkinter.Button(mf, text="終了", fg="red",
                                  command=self.destroy)
-        mf.quit.pack(side="bottom")
+        mf.exit.pack(side="bottom")

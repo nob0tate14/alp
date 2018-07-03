@@ -1,7 +1,7 @@
 from os.path import dirname
 import subprocess
 from tkinter import ttk, StringVar
-
+import tkinter
 
 def get_alpconfpath():
     fl = __file__
