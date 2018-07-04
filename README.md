@@ -9,7 +9,7 @@ execute shellscript or any programs by GUI
  Python3.6以上
 
 ## Description
-**alp.wcj**  
+**alp.main**  
 main program
 
 **src/resource/bat/**  
@@ -17,16 +17,12 @@ main program
 **src/resource/conf/**  
 画面定義用のjson等を置く場所  
 
-**sample.main**  
-sample main program  
-**sample.v.mw**  
-sample main window  
 
 ## Requirement
 
 ## Usage
 ```
-sample.main
+alp.mainを実行
 ```
 
 ## Install
