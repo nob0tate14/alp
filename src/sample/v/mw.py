@@ -3,8 +3,8 @@ import json
 import subprocess
 import tkinter
 
-from alp.core.tl import get_path_conf, execex, set_exc
-from alp.core.wcj import WindowCoreJ
+from alp.settings import CONF_DIR
+from alp.wcj import WindowCoreJ
 
 
 class MainWindow(tkinter.Tk, WindowCoreJ):
@@ -17,7 +17,7 @@ class MainWindow(tkinter.Tk, WindowCoreJ):
 
     def create_mf(self):
 
-        f = open(get_path_conf() + "/mw.json", "r")
+        f = open(CONF_DIR + "/mw.json", "r")
         j = json.load(f)
         self.load_widgets_j(self, j)
 

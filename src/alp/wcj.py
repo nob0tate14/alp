@@ -14,7 +14,7 @@ import subprocess
 from tkinter import messagebox, StringVar, ttk
 import tkinter
 
-from alp.core.tl import execex, set_exc, get_path_bat
+from alp.settings import BAT_DIR
 
 
 smug = {}
@@ -48,18 +48,16 @@ class WindowCoreJ(object):
                         f"{wdg['Name']}['{opt}']={wdg['Option'][opt]}"))
             if "Widgets" in wdg:
                 self.load_widget(obj, wdg["Widgets"])
-            pos = "side='left'"
-            if wdg['Type'] == "ttk.Frame":
-                pos = "anchor='nw',pady=3"
-                exec(set_exc(f"{wdg['Name']}.pack({pos})"))
-            elif isinstance(obj, tkinter.Frame) and isinstance(rt, ttk.Notebook):
+            if isinstance(obj, ttk.Frame) and isinstance(rt, ttk.Notebook):
                 rt.add(obj, text=(
                     wdg["Text"] if "Text" in wdg else ""), padding=3)
-            elif isinstance(obj, ttk.Notebook):
-                print("nb.pack")
-                pos = "expand=1, fill='both'"
-                exec(set_exc(f"{wdg['Name']}.pack({pos})"))
             else:
+                pos = "side='left'"
+                if wdg['Type'] == "ttk.Frame":
+                    pos = "anchor='nw',pady=2"
+                elif isinstance(obj, ttk.Notebook):
+                    print("nb.pack")
+                    pos = "expand=1, fill='both'"
                 exec(set_exc(f"{wdg['Name']}.pack({pos})"))
 
     def load_widgets_j(self, rt, j: dict):
@@ -70,13 +68,21 @@ class WindowCoreJ(object):
             else:
                 exec(set_exc(f"rt.{ky}('{j[ky]}')"))
 
+def set_exc(exc):
+    print(exc)
+    return exc
+
+
+def execex(lcls, exc):
+    print(exc)
+    exec(exc, globals(), lcls)
 
 def exec_bat(bnm, *parms):
     p = ""
     for pm in parms:
         p += " " + (smug[pm]).get()
 
-    bt = "/".join([get_path_bat(), bnm])
+    bt = "/".join([BAT_DIR, bnm])
     print(bt)
     print(p)
     # ret = subprocess.run([bt, p], shell=True, stdout=subprocess.PIPE)

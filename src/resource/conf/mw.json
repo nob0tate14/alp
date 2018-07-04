@@ -2,7 +2,7 @@
 "Widgets":[
 {"Type":"ttk.Notebook","Name":"nb1","Option":{"width":500, "height":200,"padding":4},
 "Widgets":[
-{"Type":"tkinter.Frame","Name":"frm1","Text":"タブ","Option":{"relief":"'groove'", "borderwidth":1},
+{"Type":"ttk.Frame","Name":"frm1","Text":"タブ","Option":{"relief":"'groove'", "borderwidth":1},
 "Widgets":[
 	{"Type":"ttk.Frame","Name":"frm10","Option":{"relief":"'groove'", "borderwidth":1},
 	"Widgets":[
@@ -29,7 +29,7 @@
 	]
 	}
 ]},
-{"Type":"tkinter.Frame","Name":"frm2","Text":"タブその２","Option":{"relief":"'groove'", "borderwidth":1},
+{"Type":"ttk.Frame","Name":"frm2","Text":"タブその２","Option":{"relief":"'groove'", "borderwidth":1},
 "Widgets":[
 	{"Type":"ttk.Frame","Name":"frm40","Option":{"relief":"'groove'", "borderwidth":1},
 	"Widgets":[

@@ -4,24 +4,29 @@ execute shellscript or any programs by GUI
 カスタマイズ可能な画面からシェルスクリプトを実行したりするよ  
 
 ## Overview
- JSONファイルの定義に従って画面を生成（tkinter）
- 画面から定義された処理を起動
- 
+ JSONファイルの定義に従って画面を生成（tkinter）  
+ 画面から定義された処理を起動  
+ Python3.6以上
 
 ## Description
-**alp.main.py**  
+**alp.wcj**  
 main program
 
-**alp/resource/bat/**  
+**src/resource/bat/**  
 シェルスクリプトなんかを置く場所  
-**alp/resource/conf/**  
+**src/resource/conf/**  
 画面定義用のjson等を置く場所  
+
+**sample.main**  
+sample main program  
+**sample.v.mw**  
+sample main window  
 
 ## Requirement
 
 ## Usage
 ```
-
+sample.main
 ```
 
 ## Install
