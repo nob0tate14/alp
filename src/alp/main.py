@@ -1,7 +1,7 @@
 import tkinter
 
-import alp.settings
-from sample.v.mw import MainWindow
+import alp.core.settings
+from alp.v.mw import MainWindow
 
 
 if __name__ == '__main__':

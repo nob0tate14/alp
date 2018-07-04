@@ -6,10 +6,7 @@ Created on 2018/07/04
 from os.path import dirname, abspath
 
 
-ALP_DIR = dirname(dirname(abspath(__file__)))
-print(__file__)
-print(abspath(__file__))
-print(dirname(__file__))
+ALP_DIR = dirname(dirname(dirname(abspath(__file__))))
 
 BAT_DIR = f"{ALP_DIR}/resource/bat"
 

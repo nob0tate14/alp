@@ -8,13 +8,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-import copy
-import inspect
+
 import subprocess
 from tkinter import messagebox, StringVar, ttk
 import tkinter
 
-from alp.settings import BAT_DIR
+from alp.core.settings import BAT_DIR
 
 
 smug = {}

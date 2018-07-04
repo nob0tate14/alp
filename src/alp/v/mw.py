@@ -3,8 +3,8 @@ import json
 import subprocess
 import tkinter
 
-from alp.settings import CONF_DIR
-from alp.wcj import WindowCoreJ
+from alp.core.settings import CONF_DIR
+from alp.core.wcj import WindowCoreJ
 
 
 class MainWindow(tkinter.Tk, WindowCoreJ):
