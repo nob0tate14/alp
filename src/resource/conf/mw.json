@@ -1,24 +1,43 @@
 {"title":"title dayo","geometry":"500x300+100+10",
 "Widgets":[
-{"Type":"ttk.Frame","Name":"frm1","Option":{"relief":"'groove'", "borderwidth":1},
+{"Type":"ttk.Notebook","Name":"nb1","Option":{"width":500, "height":200,"padding":4},
 "Widgets":[
-{"Type":"ttk.Label","Name":"lbl1","Option":{"width":15, "text":"'コマンド１ ls'","relief":"'ridge'", "borderwidth":1}},
-{"Type":"ttk.Label","Name":"lbl2","Option":{"width":5, "text":"'引数'"}},
-{"Type":"ttk.Entry","Name":"etr1","Option":{"width":20}},
-{"Type":"ttk.Button","Name":"btn1","Option":{"width":10, "text":"'実行'","command":"lambda:exec_bat('bat1.sh','etr1')"}},
-{"Type":"ttk.Label","Name":"lbl3","Option":{"width":20, "text":"'label dayo'"}}
-]
-},
-{"Type":"ttk.Frame","Name":"frm2","Option":{"relief":"'groove'", "borderwidth":1},
+{"Type":"ttk.Frame","Name":"frm1","Text":"タブ","Option":{"relief":"'groove'", "borderwidth":1},
 "Widgets":[
-{"Type":"ttk.Label","Name":"lbl11","Option":{"width":20, "text":"'コマンド２ echo'","relief":"'ridge'", "borderwidth":1}},
-{"Type":"ttk.Label","Name":"lbl12","Option":{"width":5, "text":"'引数'"}},
-{"Type":"ttk.Entry","Name":"etr11","Option":{"width":20}},
-{"Type":"ttk.Button","Name":"btn11","Option":{"width":10, "text":"'実行'","command":"lambda:exec_bat('bat2.sh','etr11')"}},
-{"Type":"ttk.Label","Name":"lbl13","Option":{"width":20, "text":"'label dagaya'"}}
-]
-}
-]
-
-
-}
+	{"Type":"ttk.Frame","Name":"frm10","Option":{"relief":"'groove'", "borderwidth":1},
+	"Widgets":[
+	{"Type":"ttk.Label","Name":"lbl11","Option":{"width":15, "text":"'コマンド１ ls'","relief":"'ridge'", "borderwidth":1}},
+	{"Type":"ttk.Label","Name":"lbl12","Option":{"width":5, "text":"'引数'"}},
+	{"Type":"ttk.Entry","Name":"etr13","Option":{"width":20}},
+	{"Type":"ttk.Button","Name":"btn14","Option":{"width":10, "text":"'実行'","command":"lambda:exec_bat('bat1.sh','etr13')"}}
+	]
+	},
+	{"Type":"ttk.Frame","Name":"frm20","Option":{"relief":"'groove'", "borderwidth":1},
+	"Widgets":[
+	{"Type":"ttk.Label","Name":"lbl21","Option":{"width":15, "text":"'コマンド２ echo'","relief":"'ridge'", "borderwidth":1}},
+	{"Type":"ttk.Label","Name":"lbl22","Option":{"width":5, "text":"'引数1'"}},
+	{"Type":"ttk.Entry","Name":"etr23","Option":{"width":10}},
+	{"Type":"ttk.Label","Name":"lbl24","Option":{"width":5, "text":"'引数2'"}},
+	{"Type":"ttk.Entry","Name":"etr25","Option":{"width":10}},
+	{"Type":"ttk.Button","Name":"btn26","Option":{"width":10, "text":"'実行'","command":"lambda:exec_bat('bat2.sh','etr23','etr25')"}}
+	]
+	},
+	{"Type":"ttk.Frame","Name":"frm30","Option":{"relief":"'groove'", "borderwidth":1},
+	"Widgets":[
+	{"Type":"ttk.Label","Name":"lbl31","Option":{"width":20, "text":"'コマンド３'","relief":"'ridge'", "borderwidth":1}},
+	{"Type":"ttk.Button","Name":"btn32","Option":{"width":10, "text":"'実行'","command":"lambda:exec_bat('bat2.sh')"}}
+	]
+	}
+]},
+{"Type":"ttk.Frame","Name":"frm2","Text":"タブその２","Option":{"relief":"'groove'", "borderwidth":1},
+"Widgets":[
+	{"Type":"ttk.Frame","Name":"frm40","Option":{"relief":"'groove'", "borderwidth":1},
+	"Widgets":[
+	{"Type":"ttk.Label","Name":"lbl41","Option":{"width":15, "text":"'コマンド１ ls'","relief":"'ridge'", "borderwidth":1}},
+	{"Type":"ttk.Label","Name":"lbl42","Option":{"width":5, "text":"'引数'"}},
+	{"Type":"ttk.Entry","Name":"etr43","Option":{"width":20}},
+	{"Type":"ttk.Button","Name":"btn44","Option":{"width":10, "text":"'実行'","command":"lambda:exec_bat('bat1.sh','etr43')"}}
+	]
+	}]}
+]}
+]}
