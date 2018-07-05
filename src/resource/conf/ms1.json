@@ -1,0 +1,13 @@
+{"title":"title dayo","geometry":"500x600+100+10",
+"Widgets":[
+	{"Type":"ttk.Frame","Name":"frm10","Option":{"relief":"'groove'", "borderwidth":1},
+	"Widgets":[
+	{"Type":"ttk.Label","Name":"lbl11","Option":{"width":5, "text":"'結果'"}}
+	]
+	},
+	{"Type":"ttk.Frame","Name":"frm10","Option":{"relief":"'groove'", "borderwidth":1},
+	"Widgets":[
+	{"Type":"tkinter.Text","Name":"txt2","Option":{"width":70,"height":20}}
+	]
+	}
+]}
