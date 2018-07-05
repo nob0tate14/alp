@@ -9,63 +9,54 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
+import importlib
+from pydoc import locate
 import subprocess
-from tkinter import messagebox, StringVar, ttk
+from tkinter import messagebox, ttk
 import tkinter
-
 from alp.core.settings import BAT_DIR
 
 
 smug = {}
 
+def load_widget(rt, wdgs):
+    print("load widget")
+    global smug
+    for wdg in wdgs:
+        execex(locals(), f"{wdg['Name']}={wdg['Type']}(rt)")
+        obj = eval(f"{wdg['Name']}")
+        print(obj)
+        # if wdg["Type"] == "ttk.Entry":
+            #                 v = StringVar()
+            #                 obj["textvariable"] = StringVar()
+        smug[wdg["Name"]] = obj
+        # execex(locals(), f"parent={wdg['Name']}")
+        if "Option" in wdg:
+            for opt in wdg["Option"]:
+                exec(set_exc(
+                    f"{wdg['Name']}['{opt}']={wdg['Option'][opt]}"))
+        if "Widgets" in wdg:
+            load_widget(obj, wdg["Widgets"])
+        if isinstance(obj, ttk.Frame) and isinstance(rt, ttk.Notebook):
+            rt.add(obj, text=(
+                wdg["Text"] if "Text" in wdg else ""), padding=3)
+        else:
+            pos = "side='left'"
+            if wdg['Type'] == "ttk.Frame":
+                pos = "anchor='nw',pady=2,fill='x'"
+            elif isinstance(obj, ttk.Notebook):
+                print("nb.pack")
+                pos = "expand=1, fill='both'"
+            exec(set_exc(f"{wdg['Name']}.pack({pos})"))
 
-class WindowCoreJ(object):
-    '''
-    classdocs
-    '''
+def load_widgets_j(rt, j: dict):
+    top_keys = j.keys()
+    for ky in top_keys:
+        if ky == "Widgets":
+            load_widget(rt, j[ky])
+        else:
+            exec(set_exc(f"rt.{ky}('{j[ky]}')"))
 
-    def __init__(self, params):
-        '''
-        Constructor
-        '''
-
-    def load_widget(self, rt, wdgs):
-        print("load widget")
-        global smug
-        for wdg in wdgs:
-            execex(locals(), f"{wdg['Name']}={wdg['Type']}(rt)")
-            obj = eval(f"{wdg['Name']}")
-            print(obj)
-            if wdg["Type"] == "ttk.Entry":
-#                 v = StringVar()
-#                 obj["textvariable"] = StringVar()
-                smug[wdg["Name"]] = obj
-            # execex(locals(), f"parent={wdg['Name']}")
-            if "Option" in wdg:
-                for opt in wdg["Option"]:
-                    exec(set_exc(
-                        f"{wdg['Name']}['{opt}']={wdg['Option'][opt]}"))
-            if "Widgets" in wdg:
-                self.load_widget(obj, wdg["Widgets"])
-            if isinstance(obj, ttk.Frame) and isinstance(rt, ttk.Notebook):
-                rt.add(obj, text=(
-                    wdg["Text"] if "Text" in wdg else ""), padding=3)
-            else:
-                pos = "side='left'"
-                if wdg['Type'] == "ttk.Frame":
-                    pos = "anchor='nw',pady=2"
-                elif isinstance(obj, ttk.Notebook):
-                    print("nb.pack")
-                    pos = "expand=1, fill='both'"
-                exec(set_exc(f"{wdg['Name']}.pack({pos})"))
-
-    def load_widgets_j(self, rt, j: dict):
-        top_keys = j.keys()
-        for ky in top_keys:
-            if ky == "Widgets":
-                self.load_widget(rt, j[ky])
-            else:
-                exec(set_exc(f"rt.{ky}('{j[ky]}')"))
 
 def set_exc(exc):
     print(exc)
@@ -75,6 +66,7 @@ def set_exc(exc):
 def execex(lcls, exc):
     print(exc)
     exec(exc, globals(), lcls)
+
 
 def exec_bat(bnm, *parms):
     p = ""
@@ -88,4 +80,13 @@ def exec_bat(bnm, *parms):
     ret = subprocess.run(bt + " " + p, shell=True, stdout=subprocess.PIPE)
     ret_stdout = ret.stdout.decode("utf-8")
     print(ret_stdout)
-    messagebox.showinfo('result', f"return code:{ret.returncode}")
+    # messagebox.showinfo('result', f"return code:{ret.returncode}")
+    show_windowsub1(ret_stdout)
+
+def show_windowsub1(str):
+    clss = locate("alp.v.ms1.SubWindow1")
+    ms=clss()
+    smug["txt2"].insert(tkinter.INSERT,str)
+    ms.loop_mainframe()
+
+
