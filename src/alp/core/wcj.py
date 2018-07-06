@@ -19,16 +19,21 @@ from alp.core.settings import BAT_DIR
 
 smug = {}
 
+
 def load_widget(rt, wdgs):
     print("load widget")
     global smug
     for wdg in wdgs:
-        execex(locals(), f"{wdg['Name']}={wdg['Type']}(rt)")
+        if wdg['Type'] == "ScrolledText":
+            sc=importlib.import_module('tkinter.scrolledtext')
+            exec(f"{wdg['Name']}=getattr(sc, 'ScrolledText')(rt)")
+        else:
+            execex(locals(), f"{wdg['Name']}={wdg['Type']}(rt)")
         obj = eval(f"{wdg['Name']}")
         print(obj)
         # if wdg["Type"] == "ttk.Entry":
-            #                 v = StringVar()
-            #                 obj["textvariable"] = StringVar()
+        #                 v = StringVar()
+        #                 obj["textvariable"] = StringVar()
         smug[wdg["Name"]] = obj
         # execex(locals(), f"parent={wdg['Name']}")
         if "Option" in wdg:
@@ -42,12 +47,15 @@ def load_widget(rt, wdgs):
                 wdg["Text"] if "Text" in wdg else ""), padding=3)
         else:
             pos = "side='left'"
-            if wdg['Type'] == "ttk.Frame":
+            if wdg['Type'] == "ScrolledText":
+                pos = "expand=2,fill='both'"
+            elif wdg['Type'] == "ttk.Frame":
                 pos = "anchor='nw',pady=2,fill='x'"
             elif isinstance(obj, ttk.Notebook):
                 print("nb.pack")
                 pos = "expand=1, fill='both'"
             exec(set_exc(f"{wdg['Name']}.pack({pos})"))
+
 
 def load_widgets_j(rt, j: dict):
     top_keys = j.keys()
@@ -81,12 +89,13 @@ def exec_bat(bnm, *parms):
     ret_stdout = ret.stdout.decode("utf-8")
     print(ret_stdout)
     # messagebox.showinfo('result', f"return code:{ret.returncode}")
-    show_windowsub1(ret_stdout)
+    show_windowsub1(ret)
 
-def show_windowsub1(str):
-    clss = locate("alp.v.ms1.SubWindow1")
-    ms=clss()
-    smug["txt2"].insert(tkinter.INSERT,str)
+
+def show_windowsub1(ret):
+    #clss = locate("alp.v.ms1.SubWindow1")
+    clss = getattr(importlib.import_module("alp.v.ms1"), "SubWindow1")
+    ms = clss()
+    smug["lbl102"]["text"]=f"return code:{ret.returncode}"
+    smug["txt2"].insert(tkinter.INSERT, ret.stdout.decode("utf-8"))
     ms.loop_mainframe()
-
-
