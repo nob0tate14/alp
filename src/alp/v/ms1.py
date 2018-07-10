@@ -16,7 +16,7 @@ class SubWindow1(tkinter.Tk):
         f = open(f"{Alp.CONF_DIR}/{filename}", "r")
         j = json.load(f)
         alp = Alp()
-        alp.load_widgets_j(self, j)
+        alp.load_widgets(self, j)
 
         mf = tkinter.Frame(master=self)
         mf.pack()

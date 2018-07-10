@@ -11,6 +11,8 @@
 
 import configparser
 import importlib
+from logging import config, RootLogger
+import logging
 import os
 from os.path import dirname, abspath
 import subprocess
@@ -19,19 +21,27 @@ from tkinter import ttk, messagebox
 import tkinter
 
 
+def get_alplogger():
+    return Alp.logger_
+
+
 class Alp(object):
     INI_PATH = f"{dirname(abspath(__file__))}/setting.ini"
     ALP_DIR = dirname(dirname(dirname(abspath(__file__))))
+
     BAT_DIR = f"{ALP_DIR}/resource/bat"
     CONF_DIR = f"{ALP_DIR}/resource/conf"
 
     vase_ = {}
+    logger_: RootLogger
 
     @staticmethod
-    def beginning(ini_file=INI_PATH):
+    def beginning(ini_file=INI_PATH, logger=None):
         Alp.vase_ = {}
         cp = configparser.ConfigParser()
         cp.read(ini_file)
+        prj_dir = dirname(dirname(dirname(dirname(abspath(__file__)))))
+
         if ini_file != Alp.INI_PATH:
             Alp.BAT_DIR = cp["alp.setting"]["bat_dir"]
             Alp.CONF_DIR = cp["alp.setting"]["conf_dir"]
@@ -40,30 +50,35 @@ class Alp(object):
             Alp.BAT_DIR = eval(cp["alp.setting"]["bat_dir"])
             Alp.CONF_DIR = eval(cp["alp.setting"]["conf_dir"])
 
-    def load_widget(self, rt, wdgs):
-        print("load widget")
+        if logger is None:
+            Alp.logger_ = logging.getLogger("Alp")
+        else:
+            Alp.logger_ = logger
+
+    def load_widget_sub(self, rt, wdgs):
+        get_alplogger().debug("load widget")
         for wdg in wdgs:
             if wdg['Type'] == "ScrolledText":
                 sc = importlib.import_module('tkinter.scrolledtext')
                 exec(f"{wdg['Name']}=getattr(sc, 'ScrolledText')(rt)")
             else:
-                execex(locals(), f"{wdg['Name']}=ttk.{wdg['Type']}(rt)")
+                exec(f"{wdg['Name']}=ttk.{wdg['Type']}(rt)")
             obj = eval(f"{wdg['Name']}")
-            print(obj)
+            get_alplogger().debug(obj)
             Alp.vase_[wdg["Name"]] = obj
             # execex(locals(), f"parent={wdg['Name']}")
             if "Option" in wdg:
                 for opt in wdg["Option"]:
                     if opt == "RunExec":
-                        exec(set_exc(
-                            f"{wdg['Name']}['command']=lambda:exec_bat({wdg['Option'][opt]})"))
+                        exec(
+                            f"{wdg['Name']}['command']=lambda:exec_bat({wdg['Option'][opt]})")
                     elif opt == "Default" and wdg['Type'] == "Entry":
-                        obj.insert(0,wdg['Option'][opt])
+                        obj.insert(0, wdg['Option'][opt])
                     else:
-                        exec(set_exc(
-                            f"{wdg['Name']}['{opt}']={wdg['Option'][opt]}"))
+                        exec(
+                            f"{wdg['Name']}['{opt}']={wdg['Option'][opt]}")
             if "Widgets" in wdg:
-                self.load_widget(obj, wdg["Widgets"])
+                self.load_widget_sub(obj, wdg["Widgets"])
             if isinstance(obj, ttk.Frame) and isinstance(rt, ttk.Notebook):
                 rt.add(obj, text=(
                     wdg["Text"] if "Text" in wdg else ""), padding=3)
@@ -74,28 +89,16 @@ class Alp(object):
                 elif wdg['Type'] == "Frame":
                     pos = "anchor='nw',pady=2,fill='x'"
                 elif isinstance(obj, ttk.Notebook):
-                    print("nb.pack")
                     pos = "expand=1, fill='both'"
-                exec(set_exc(f"{wdg['Name']}.pack({pos})"))
+                exec(f"{wdg['Name']}.pack({pos})")
 
-    def load_widgets_j(self, rt, j: dict):
+    def load_widgets(self, rt, j: dict):
         top_keys = j.keys()
         for ky in top_keys:
             if ky == "Widgets":
-                self.load_widget(rt, j[ky])
+                self.load_widget_sub(rt, j[ky])
             else:
-                exec(set_exc(f"rt.{ky}('{j[ky]}')"))
-
-
-def set_exc(exc):
-    print(exc)
-    return exc
-
-
-def execex(lcls, exc):
-    print(exc)
-    exec(exc, globals(), lcls)
-
+                exec(f"rt.{ky}('{j[ky]}')")
 
 def exec_bat(retmode, bnm, *parms):
     p = ""
@@ -103,12 +106,10 @@ def exec_bat(retmode, bnm, *parms):
         p += " " + (Alp.vase_[pm]).get()
 
     bt = "/".join([Alp.BAT_DIR, bnm])
-    print(bt)
-    print(p)
     # ret = subprocess.run([bt, p], shell=True, stdout=subprocess.PIPE)
     ret = subprocess.run(bt + " " + p, shell=True, stdout=subprocess.PIPE)
     ret_stdout = ret.stdout.decode("utf-8")
-    print(ret_stdout)
+    get_alplogger().debug(ret_stdout)
     if retmode == "D":
         messagebox.showinfo('result', f"return code:{ret.returncode}")
     else:
@@ -119,11 +120,11 @@ def exec_py3(bnm, *parms):
     p = ""
     for pm in parms:
         p += " " + (Alp.vase_[pm]).get()
-    print(p)
+
     ret = subprocess.run(f"python3 {bnm} {p}",
                          shell=True, stdout=subprocess.PIPE)
     ret_stdout = ret.stdout.decode("utf-8")
-    print(ret_stdout)
+    get_alplogger().debug(ret_stdout)
     # messagebox.showinfo('result', f"return code:{ret.returncode}")
     show_windowsub1(ret)
 

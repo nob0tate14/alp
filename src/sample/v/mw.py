@@ -16,7 +16,7 @@ class MainWindow(tkinter.Tk):
         f = open(f"{Alp.CONF_DIR}/{filename}", "r")
         j = json.load(f)
         alp = Alp()
-        alp.load_widgets_j(self, j)
+        alp.load_widgets(self, j)
 
         mf = tkinter.Frame(master=self)
         mf.pack()
@@ -24,3 +24,6 @@ class MainWindow(tkinter.Tk):
         mf.exit = tkinter.Button(mf, text="終了", fg="red",
                                  command=self.destroy)
         mf.exit.pack(side="bottom")
+
+        img = tkinter.Image("photo", file=f"{Alp.CONF_DIR}/gracie.png")
+        self.tk.call('wm', 'iconphoto', self._w, img)
